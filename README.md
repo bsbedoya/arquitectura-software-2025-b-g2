@@ -1,4 +1,5 @@
 # Arquitectura de Software
+
 **Código:** ARQUITECTURA-SOFTWARE-2025-B-G2 | **Período:** 2025-B | **Grupo:** G2
 
 <div style="background-color: #e8f5e8; padding: 20px; border-left: 5px solid #4CAF50; margin: 20px 0; border-radius: 5px;">
