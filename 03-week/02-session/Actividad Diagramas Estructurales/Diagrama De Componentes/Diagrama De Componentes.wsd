@@ -1,0 +1,30 @@
+@startuml
+package "Frontend" {
+  [WebApp] --> [ControladorCarrito]
+  [WebApp] --> [ControladorLogin]
+  [WebApp] --> [ControladorCatalogo]
+  [WebApp] --> [ControladorPedidos]
+}
+
+package "Backend" {
+  [ControladorCarrito] --> [ServicioCarrito]
+  [ControladorLogin] --> [ServicioAutenticacion]
+  [ControladorCatalogo] --> [ServicioProductos]
+  [ControladorPedidos] --> [ServicioPedidos]
+
+  [ServicioCarrito] --> [RepositorioProductos]
+  [ServicioCarrito] --> [RepositorioPedidos]
+  [ServicioProductos] --> [RepositorioProductos]
+  [ServicioPedidos] --> [RepositorioPedidos]
+  [ServicioUsuarios] --> [RepositorioUsuarios]
+  [ServicioAutenticacion] --> [RepositorioUsuarios]
+}
+
+package "Base de Datos" {
+  [BD_Sistema]
+}
+
+[RepositorioProductos] --> [BD_Sistema]
+[RepositorioPedidos] --> [BD_Sistema]
+[RepositorioUsuarios] --> [BD_Sistema]
+@enduml

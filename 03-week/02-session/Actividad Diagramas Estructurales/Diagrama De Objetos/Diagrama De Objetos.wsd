@@ -1,0 +1,39 @@
+@startuml
+object usuario1 {
+  id = 1
+  nombre = "Carlos"
+  email = "carlos@mail.com"
+}
+
+object carrito1 {
+  id = 5001
+  total = 2550.00
+}
+
+object carrito2 {
+  id = 5002
+  total = 25.76
+}
+
+
+
+map Productos {
+  "101" => "Laptop"
+  "102" => "Mouse"
+  "103" => "Teclado"
+  "104" => "Audífonos"
+  "105" => "Monitor"
+}
+
+map Productos2 {
+  "110" => "Vegetales"
+  "120" => "Granos"
+  "130" => "Carnes"
+ 
+}
+
+usuario1 --> carrito1
+usuario1 --> carrito2
+carrito1 --> Productos
+carrito2 --> Productos2
+@enduml

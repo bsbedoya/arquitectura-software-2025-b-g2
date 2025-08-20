@@ -1,0 +1,41 @@
+@startuml
+
+class Usuario {
+  -id: int
+  -nombre: string
+  -email: string
+  +registrarse()
+  +iniciarSesion()
+}
+
+class Producto {
+  -id: int
+  -nombre: string
+  -precio: double
+  -stock: int
+  +actualizarStock()
+}
+
+class Carrito {
+  -id: int
+  -total: double
+  +agregarProducto()
+  +eliminarProducto()
+  +calcularTotal()
+}
+
+class Pedido {
+  -id: int
+  -fecha: Date
+  -estado: string
+  +confirmarPedido()
+  +cancelarPedido()
+}
+
+Usuario --> Carrito
+Usuario --> Pedido
+
+Carrito --> Producto  
+Pedido --> Producto  
+
+@enduml
