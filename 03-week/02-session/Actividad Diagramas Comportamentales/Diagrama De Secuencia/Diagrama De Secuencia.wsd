@@ -1,0 +1,30 @@
+@startuml
+actor Usuario
+participant "Interfaz Web" as UI
+participant "Controlador Carrito" as CarritoCtrl
+participant "Servicio Producto" as ProductoSrv
+database "Base de Datos" as DB
+participant "Servicio Pago" as PagoSrv
+
+== Flujo de Compra ==
+
+Usuario -> UI : Inicia sesión / Navega
+UI -> CarritoCtrl : Agregar producto al carrito
+CarritoCtrl -> ProductoSrv : Verificar disponibilidad
+ProductoSrv -> DB : Consultar stock
+DB --> ProductoSrv : Retorna disponibilidad
+ProductoSrv --> CarritoCtrl : Producto disponible
+
+CarritoCtrl -> DB : Guardar producto en carrito
+CarritoCtrl --> UI : Producto agregado
+
+== Finalizar Compra ==
+Usuario -> UI : Finalizar compra
+UI -> CarritoCtrl : Solicitar confirmación
+CarritoCtrl -> PagoSrv : Procesar pago
+PagoSrv -> DB : Registrar transacción
+DB --> PagoSrv : Confirmación
+PagoSrv --> CarritoCtrl : Pago exitoso
+CarritoCtrl --> UI : Compra completada
+UI --> Usuario : Confirmación de compra
+@enduml

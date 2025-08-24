@@ -1,0 +1,41 @@
+@startuml
+title Interacción General: Carrito de Compras
+
+start
+:Usuario navega en catálogo;
+
+partition Usuario {
+    :Seleccionar producto;
+    :Agregar producto al carrito;
+}
+
+partition Carrito {
+    :Actualizar lista de productos;
+    :Mostrar carrito;
+}
+
+if (¿Seguir comprando?) then (Sí)
+    :Volver al catálogo;
+else (No)
+    :Ir al Checkout;
+endif
+
+partition Checkout {
+    :Revisar carrito;
+    :Confirmar dirección;
+    :Seleccionar método de pago;
+}
+
+partition Pago {
+    :Procesar transacción;
+    if (Pago exitoso?) then (Sí)
+        :Generar orden de compra;
+        :Actualizar inventario;
+    else (No)
+        :Mostrar error de pago;
+        :Volver al Checkout;
+    endif
+}
+
+stop
+@enduml

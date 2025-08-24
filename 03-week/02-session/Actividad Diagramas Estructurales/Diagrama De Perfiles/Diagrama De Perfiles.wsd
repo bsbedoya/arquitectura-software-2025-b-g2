@@ -1,0 +1,33 @@
+@startuml
+
+package "PerfilCarritoCompras" <<profile>> {
+
+  
+  class EntidadPersistente <<stereotype>> {
+  }
+
+  class ControladorNegocio <<stereotype>> {
+  }
+
+  class VistaUsuario <<stereotype>> {
+  }
+
+  class ServicioPago <<stereotype>> {
+  }
+
+  class RepositorioDatos <<stereotype>> {
+  }
+}
+
+
+class CarritoCompras <<EntidadPersistente>>
+class ControladorCarrito <<ControladorNegocio>>
+class InterfazWeb <<VistaUsuario>>
+class PasarelaPago <<ServicioPago>>
+class BDProductos <<RepositorioDatos>>
+
+CarritoCompras --> ControladorCarrito
+ControladorCarrito --> InterfazWeb
+ControladorCarrito --> PasarelaPago
+CarritoCompras --> BDProductos
+@enduml

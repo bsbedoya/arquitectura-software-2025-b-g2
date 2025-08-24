@@ -1,0 +1,35 @@
+@startuml
+start
+
+:Explorar productos;
+:Seleccionar producto;
+:Agregar al carrito;
+
+if (¿Producto disponible?) then (Sí)
+  :Actualizar carrito;
+  :Mostrar carrito actualizado;
+else (No)
+  :Mostrar mensaje de "Producto no disponible";
+  stop
+endif
+
+:Revisar carrito;
+if (¿Finalizar compra?) then (Sí)
+  :Ingresar datos de envío;
+  :Seleccionar método de pago;
+  :Procesar pago;
+
+  if (¿Pago exitoso?) then (Sí)
+    :Confirmar compra;
+    :Generar comprobante;
+    :Notificar usuario;
+  else (No)
+    :Mostrar error de pago;
+  endif
+else (No)
+  :Seguir comprando;
+  :Explorar productos;
+endif
+
+stop
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+node "Cliente" {
+  artifact "Navegador Web" as navegador
+}
+
+node "Servidor Web" {
+  artifact "Aplicación Carrito" as app
+}
+
+node "Servidor de Base de Datos" {
+  database "Base de Datos Carrito" as db
+}
+
+navegador --> app : HTTP/HTTPS
+app --> db : SQL
+
+@enduml

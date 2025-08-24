@@ -1,0 +1,36 @@
+@startuml
+title Diagrama de Tiempos - Carrito de Compras
+
+robust Usuario
+robust Carrito
+robust Pago
+
+@0
+Usuario is Navegando
+Carrito is Vacio
+Pago is Inactivo
+
+@10
+Usuario is AgregaProductos
+Carrito is ConProductos
+
+@20
+Usuario is FinalizaCompra
+Carrito is Checkout
+
+@30
+Usuario is IngresaDatos
+Carrito is EsperandoPago
+Pago is Procesando
+
+@40
+Pago is Aprobado
+Carrito is Pagado
+Usuario is CompraExitosa
+
+@50
+Pago is Error
+Carrito is Checkout
+Usuario is ReintentaPago
+@enduml
+

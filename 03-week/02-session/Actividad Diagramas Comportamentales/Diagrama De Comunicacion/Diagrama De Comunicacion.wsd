@@ -1,0 +1,35 @@
+@startuml
+skinparam linetype ortho
+skinparam object {
+  BackgroundColor #EFEFEF
+  BorderColor Black
+}
+
+
+object Usuario
+object Interfaz
+object CarritoCtrl
+object ProductoSrv
+object PagoSrv
+object BD
+
+left to right direction
+
+
+Usuario -> Interfaz : 1. Seleccionar producto
+Interfaz -> CarritoCtrl : 2. Agregar producto
+CarritoCtrl -> ProductoSrv : 3. Verificar disponibilidad
+ProductoSrv -> BD : 3.1 Consultar stock
+ProductoSrv -> CarritoCtrl : 3.2 Confirmar
+CarritoCtrl -> BD : 4. Guardar en carrito
+CarritoCtrl -> Interfaz : 5. Confirmar agregado
+
+Usuario -> Interfaz : 6. Finalizar compra
+Interfaz -> CarritoCtrl : 7. Solicitar confirmación
+CarritoCtrl -> PagoSrv : 8. Procesar pago
+PagoSrv -> BD : 8.1 Registrar transacción
+PagoSrv -> CarritoCtrl : 8.2 Pago exitoso
+CarritoCtrl -> Interfaz : 9. Compra completada
+Interfaz -> Usuario : 10. Confirmación
+@enduml
+

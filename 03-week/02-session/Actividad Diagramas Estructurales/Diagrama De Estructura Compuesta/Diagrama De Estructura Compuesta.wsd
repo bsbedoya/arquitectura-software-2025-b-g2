@@ -1,0 +1,65 @@
+@startuml
+
+title Diagrama de Estructura Compuesta - Carrito de Compras
+
+
+class CarritoCompras {
+  - idCarrito : int
+  - total : double
+  + agregarProducto(p : Producto)
+  + eliminarProducto(p : Producto)
+  + calcularTotal()
+}
+
+
+CarritoCompras *--  ItemCarrito
+CarritoCompras o-- Usuario
+CarritoCompras *-- Pago
+CarritoCompras *-- Envio
+
+
+class ItemCarrito {
+  - cantidad : int
+  + subtotal()
+}
+
+
+class Producto {
+  - idProducto : int
+  - nombre : String
+  - precio : double
+}
+
+
+class Usuario {
+  - idUsuario : int
+  - nombre : String
+  - email : String
+}
+
+
+class Pago {
+  - metodo : String
+  - estado : String
+  + procesarPago()
+}
+
+
+class Envio {
+  - direccion : String
+  - estado : String
+  + generarGuia()
+}
+
+
+ItemCarrito --> Producto : contiene >
+CarritoCompras --> Envio : coordina >
+CarritoCompras --> Pago : procesa >
+
+
+CarritoCompras : +agregarProducto()
+CarritoCompras : +eliminarProducto()
+CarritoCompras : +calcularTotal()
+
+@enduml
+

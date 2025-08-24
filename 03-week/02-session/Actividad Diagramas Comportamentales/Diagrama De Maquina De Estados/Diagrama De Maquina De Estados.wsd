@@ -1,0 +1,27 @@
+@startuml
+[*] --> Vacío : Inicio
+
+state Vacío {
+}
+
+Vacío --> ConProductos : Agregar producto
+ConProductos --> Vacío : Eliminar todos los productos
+
+state ConProductos {
+  [*] --> Activo
+  Activo --> Actualizado : Agregar/Eliminar producto
+  Actualizado --> Activo : Confirmar cambios
+}
+
+ConProductos --> EnProcesoDeCompra : Proceder a pagar
+
+state EnProcesoDeCompra {
+  [*] --> RevisandoCarrito
+  RevisandoCarrito --> ProcesandoPago : Confirmar compra
+  ProcesandoPago --> Pagado : Pago exitoso
+  ProcesandoPago --> ErrorPago : Pago fallido
+  ErrorPago --> RevisandoCarrito : Reintentar
+}
+
+Pagado --> [*] : Orden finalizada
+@enduml

@@ -1,0 +1,79 @@
+@startuml
+title Diagrama de Paquetes - Sistema de Carrito de Compras
+
+' ============================
+' Paquete de Presentación (Frontend)
+' ============================
+package "Presentación" {
+    package "UI Web" {
+        class VistaProducto
+        class VistaCarrito
+        class VistaPago
+    }
+    package "Controladores" {
+        class ControladorProducto
+        class ControladorCarrito
+        class ControladorPago
+    }
+}
+
+' ============================
+' Paquete de Lógica de Negocio
+' ============================
+package "Lógica de Negocio" {
+    class ServicioProducto
+    class ServicioCarrito
+    class ServicioPago
+}
+
+' ============================
+' Paquete de Datos
+' ============================
+package "Datos" {
+    package "Repositorios" {
+        class ProductoRepository
+        class CarritoRepository
+        class UsuarioRepository
+        class PagoRepository
+    }
+    package "Entidades" {
+        class Producto
+        class Carrito
+        class Usuario
+        class Pago
+        class ItemCarrito
+    }
+}
+
+' ============================
+' Paquete de Utilidades
+' ============================
+package "Utilidades" {
+    class Logger
+    class Validador
+    class ConversorMoneda
+}
+
+' ============================
+' Dependencias entre paquetes
+' ============================
+
+' La UI depende de los Controladores
+"UI Web" ..> "Controladores"
+
+' Los Controladores dependen de los Servicios de Lógica de Negocio
+"Controladores" ..> "Lógica de Negocio"
+
+' La Lógica de Negocio depende de los Repositorios de Datos
+"Lógica de Negocio" ..> "Repositorios"
+
+' Los Repositorios manejan Entidades
+"Repositorios" ..> "Entidades"
+
+' La Lógica de Negocio también usa utilidades
+"Lógica de Negocio" ..> "Utilidades"
+
+' La UI puede usar utilidades directamente (ej: validaciones de formularios)
+"UI Web" ..> "Utilidades"
+
+@enduml
