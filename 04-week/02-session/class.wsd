@@ -1,0 +1,90 @@
+@startuml
+class Persona{
+    - id: int
+    - tipo_documento : String
+    - documento : String
+    - nombre : String
+    + setNombre(nombre: String): void
+    + getNombre(): String
+}
+
+class Domicilio {
+    - id: int
+    - direccion: String
+    - ciudad: String
+    - pais: String
+    + setDireccion(direccion: String): void
+    + getDireccion(): String
+    + setCiudad(ciudad: String): void
+    + getCiudad(): String
+    + setPais(pais: String): void
+    + getPais(): String
+}
+
+class Usuario extends Persona{ 
+    - id: int
+    - nombre: String
+    + Autenticar(): boolean
+}
+
+class CuentaUsuario {
+    - cuentas: List<Cuenta>
+    + AgregarCuenta(): void
+    + EliminarCuenta(): void
+}
+
+class Cuenta extends AOperacion {
+    - numero: String
+    - saldo: float
+    - accion: Enums.Accion
+    - Ejecutar(): void
+}
+' Ejemplo de polimorfismo, dónde el métodos ejecutar se comporta de manera diferente según la acción. Puede ser Ejecutar() en el contexto de un depósito o un retiro. Ejecutar(){ if(this.accion == Enums.Accion.DEPOSITO) { //here | espacio para depositar }else{ //here | espacio para retirar} }
+
+
+class Enums {
+    + Accion: { DEPOSITO, RETIRO }
+}
+
+abstract class AOperacion implements IOperacion {
+    - monto: float
+    + Ejecutar(): void
+}
+
+interface IOperacion {
+    + Ejecutar(): void
+}
+
+CuentaUsuario *-- Cuenta
+CuentaUsuario *-- Usuario
+Persona o-- Domicilio
+
+'Herencia'
+'- Definición: Permite que una clase (subclase) herede atributos y comportamientos de otra (superclase). En el diagrama, `Usuario extends Persona` muestra esta relación de generalización/especialización.'
+
+'Encapsulamiento'
+'- Definición: Ocultar los detalles internos de una clase y exponer sólo lo necesario mediante métodos públicos. Ejemplo: atributos privados en `Persona` accesibles mediante `setNombre`/`getNombre`.'
+
+'Abstracción'
+'- Definición: Separar la interfaz (qué hace) de la implementación (cómo lo hace). La clase abstracta `AOperacion` y la interfaz `IOperacion` muestran abstracción: definen `Ejecutar` sin detallar la lógica concreta.'
+
+'Polimorfismo'
+'- Definición: Permite que el mismo mensaje (método) se comporte de forma diferente según el tipo del objeto en tiempo de ejecución. En el ejemplo, `Ejecutar` puede comportarse distinto en `Cuenta` u otras operaciones (p. ej., depósito vs retiro) según el valor de `accion`.
+
+'Interfaz'
+'- Definición: Un contrato que declara métodos que las clases deben implementar. `IOperacion` obliga a definir `Ejecutar`.
+
+'Sobrecarga vs Overriding (sobrescritura)'
+'- Sobrecarga: Mismo nombre de método, distintas firmas (parámetros) dentro de la misma clase.
+'- Overriding: Subclase redefine el comportamiento de un método heredado (mismo nombre y firma).
+
+'Cohesión y Acoplamiento'
+'- Cohesión: Qué tan relacionadas están las responsabilidades dentro de una clase. Una clase con alta cohesión tiene una única responsabilidad clara (p. ej., `Cuenta` gestiona operaciones del saldo).
+'- Acoplamiento: Dependencias entre clases. Buscamos bajo acoplamiento para que los cambios en una clase afecten poco a otras. Aquí, `CuentaUsuario` agrupa `Cuenta` y `Usuario` (composición), lo que muestra una relación estructurada.
+
+'Buenas prácticas en el ejemplo'
+'- Mantener atributos privados y exponer comportamientos necesarios mediante métodos públicos (encapsulamiento).
+'- Usar interfaces para definir contratos reutilizables (`IOperacion`) y clases abstractas para compartir lógica común (`AOperacion`).
+'- Implementar polimorfismo para manejar distintas operaciones (DEPÓSITO/RETIRO) a través de la misma interfaz.
+
+@enduml
