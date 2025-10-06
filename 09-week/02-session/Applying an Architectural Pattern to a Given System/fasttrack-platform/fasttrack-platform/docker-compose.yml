@@ -1,0 +1,227 @@
+version: '3.9'
+
+services:
+
+  #  CLIENT SERVICE
+
+  mysql-client:
+    image: mysql:8.0
+    container_name: mysql-client
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: client_db
+      MYSQL_USER: client_user
+      MYSQL_PASSWORD: client_pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - client_data:/var/lib/mysql
+    networks:
+      - backend_network
+
+  client-service:
+    build: ./Client-service
+    container_name: client-service
+    restart: always
+    depends_on:
+      - mysql-client
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-client:3306/client_db
+      SPRING_DATASOURCE_USERNAME: client_user
+      SPRING_DATASOURCE_PASSWORD: client_pass
+      SERVER_PORT: 8081
+    ports:
+      - "8081:8081"
+    networks:
+      - backend_network
+
+
+  #  SHIPMENT SERVICE
+
+  mysql-shipment:
+    image: mysql:8.0
+    container_name: mysql-shipment
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: shipment_db
+      MYSQL_USER: shipment_user
+      MYSQL_PASSWORD: shipment_pass
+    ports:
+      - "3308:3306"
+    volumes:
+      - shipment_data:/var/lib/mysql
+    networks:
+      - backend_network
+
+  shipment-service:
+    build: ./Shipment-service
+    container_name: shipment-service
+    restart: always
+    depends_on:
+      - mysql-shipment
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-shipment:3306/shipment_db
+      SPRING_DATASOURCE_USERNAME: shipment_user
+      SPRING_DATASOURCE_PASSWORD: shipment_pass
+      SERVER_PORT: 8082
+    ports:
+      - "8082:8082"
+    networks:
+      - backend_network
+
+
+  # FLEET SERVICE
+
+  mysql-fleet:
+    image: mysql:8.0
+    container_name: mysql-fleet
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: fleet_db
+      MYSQL_USER: fleet_user
+      MYSQL_PASSWORD: fleet_pass
+    ports:
+      - "3309:3306"
+    volumes:
+      - fleet_data:/var/lib/mysql
+    networks:
+      - backend_network
+
+  fleet-service:
+    build: ./Fleet-service
+    container_name: fleet-service
+    restart: always
+    depends_on:
+      - mysql-fleet
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-fleet:3306/fleet_db
+      SPRING_DATASOURCE_USERNAME: fleet_user
+      SPRING_DATASOURCE_PASSWORD: fleet_pass
+      SERVER_PORT: 8083
+    ports:
+      - "8083:8083"
+    networks:
+      - backend_network
+
+
+  #  PAY SERVICE
+
+  mysql-pay:
+    image: mysql:8.0
+    container_name: mysql-pay
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: pay_db
+      MYSQL_USER: pay_user
+      MYSQL_PASSWORD: pay_pass
+    ports:
+      - "3310:3306"
+    volumes:
+      - pay_data:/var/lib/mysql
+    networks:
+      - backend_network
+
+  pay-service:
+    build: ./Pay-service
+    container_name: pay-service
+    restart: always
+    depends_on:
+      - mysql-pay
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-pay:3306/pay_db
+      SPRING_DATASOURCE_USERNAME: pay_user
+      SPRING_DATASOURCE_PASSWORD: pay_pass
+      SERVER_PORT: 8084
+    ports:
+      - "8084:8084"
+    networks:
+      - backend_network
+
+
+  # NOTIFICATION SERVICE
+
+  mysql-notification:
+    image: mysql:8.0
+    container_name: mysql-notification
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: notification_db
+      MYSQL_USER: notif_user
+      MYSQL_PASSWORD: notif_pass
+    ports:
+      - "3311:3306"
+    volumes:
+      - notification_data:/var/lib/mysql
+    networks:
+      - backend_network
+
+  notification-service:
+    build: ./Notification-service
+    container_name: notification-service
+    restart: always
+    depends_on:
+      - mysql-notification
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-notification:3306/notification_db
+      SPRING_DATASOURCE_USERNAME: notif_user
+      SPRING_DATASOURCE_PASSWORD: notif_pass
+      SERVER_PORT: 8085
+    ports:
+      - "8085:8085"
+    networks:
+      - backend_network
+
+ 
+  # PEOPLE SERVICE
+
+  mysql-people:
+    image: mysql:8.0
+    container_name: mysql-people
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: people_db
+      MYSQL_USER: people_user
+      MYSQL_PASSWORD: people_pass
+    ports:
+      - "3312:3306"
+    volumes:
+      - people_data:/var/lib/mysql
+    networks:
+      - backend_network
+
+  people-service:
+    build: ./People-service
+    container_name: people-service
+    restart: always
+    depends_on:
+      - mysql-people
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-people:3306/people_db
+      SPRING_DATASOURCE_USERNAME: people_user
+      SPRING_DATASOURCE_PASSWORD: people_pass
+      SERVER_PORT: 8086
+    ports:
+      - "8086:8086"
+    networks:
+      - backend_network
+
+
+#  NETWORKS & VOLUMES
+
+networks:
+  backend_network:
+    driver: bridge
+
+volumes:
+  client_data:
+  shipment_data:
+  fleet_data:
+  pay_data:
+  notification_data:
+  people_data:
